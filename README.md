@@ -106,7 +106,6 @@ Eject the mass storage device and select **Twitch** from the app menu. On first 
 |--------|--------|
 | UP / DOWN | Cycle through views |
 | A + C (hold 2s) | Force WiFi refresh (clears cache) |
-| B (hold 2s) | Activate Bluetooth LE mode (twitch-bt only) |
 | HOME | Return to menu |
 
 ## Display Views
