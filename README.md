@@ -13,7 +13,7 @@ Supports both the **Pimoroni Badger 2350** (e-ink) and **Pimoroni Tufty 2350** (
 - **Latest cheer** — bit amount and cheerer name
 - **Live status indicator** — shows when you're streaming
 - **Profile avatar** — displayed on the Tufty 2350's colour screen
-- **Auto-rotating views** — cycle through stats hands-free (Only on Tufty2350)
+- **Auto-rotating views** — cycle through stats hands-free (Only for intervals of 30s+ on **Badger 2350**)
 - **Battery & charging indicator** — so you know when to top up
 - **Smart caching** — loads instantly from cache, refreshes in the background
 - **Low battery mode** — disables animations below 20% to extend battery life

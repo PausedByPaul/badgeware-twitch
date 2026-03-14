@@ -58,6 +58,7 @@ badge_config = {
     "show_latest_sub": True,
     "show_latest_cheer": True,
     "show_latest_gifted_sub": True,
+    "auto_scroll": 0,
 }
 
 
@@ -431,6 +432,7 @@ def load_cache():
             badge_config["show_latest_sub"] = cfg.get("show_latest_sub", True)
             badge_config["show_latest_cheer"] = cfg.get("show_latest_cheer", True)
             badge_config["show_latest_gifted_sub"] = cfg.get("show_latest_gifted_sub", True)
+            badge_config["auto_scroll"] = cfg.get("auto_scroll", 0)
         
         build_pages()
         print("Loaded cached Twitch data")
@@ -502,6 +504,7 @@ def fetch_data():
             badge_config["show_latest_sub"] = cfg.get("show_latest_sub", True)
             badge_config["show_latest_cheer"] = cfg.get("show_latest_cheer", True)
             badge_config["show_latest_gifted_sub"] = cfg.get("show_latest_gifted_sub", True)
+            badge_config["auto_scroll"] = cfg.get("auto_scroll", 0)
 
         build_pages()
         
@@ -526,8 +529,11 @@ def fetch_data():
         return False
 
 
+auto_scroll_pending = False
+
+
 def update():
-    global current_page, data_fetched
+    global current_page, data_fetched, auto_scroll_pending
 
     # Check for refresh command (hold A)
     # Use held() which checks current physical state without consuming press events
@@ -543,6 +549,7 @@ def update():
             return
         data_fetched = True
         current_page = 0
+        auto_scroll_pending = False
 
     # Try to load from cache on first run
     if not data_fetched:
@@ -558,6 +565,12 @@ def update():
                 return
             data_fetched = True
 
+    # Auto-scroll: advance page if woken by alarm (not a button press)
+    if auto_scroll_pending:
+        auto_scroll_pending = False
+        if not badge.pressed(BUTTON_UP) and not badge.pressed(BUTTON_DOWN):
+            current_page = (current_page + 1) % len(pages)
+
     # Page navigation with UP/DOWN (pressed = edge-triggered, won't conflict with held check)
     if badge.pressed(BUTTON_UP):
         current_page = max(0, current_page - 1)
@@ -569,11 +582,18 @@ def update():
     pages[current_page]()
     badge.update()
 
-    # Wake from sleep in 15 minutes to refresh data
-    rtc.set_alarm(minutes=15)
-
-    # Wait for button press or alarm; sleep after 5s if on battery
-    wait_for_button_or_alarm(timeout=5000)
+    auto_scroll = badge_config.get("auto_scroll", 0)
+    if auto_scroll >= 30 and len(pages) > 1:
+        # Auto-scroll: wake after the configured interval to cycle pages
+        auto_scroll_pending = True
+        rtc.set_alarm(seconds=auto_scroll)
+        # Keep polling long enough for the alarm to fire (avoids dormant sleep
+        # which would cause a full hardware reset and lose page state)
+        wait_for_button_or_alarm(timeout=(auto_scroll + 2) * 1000)
+    else:
+        # No auto-scroll: wake from sleep in 15 minutes to refresh data
+        rtc.set_alarm(minutes=15)
+        wait_for_button_or_alarm(timeout=5000)
 
 
 def on_exit():
