@@ -296,6 +296,7 @@ def get_streamer_data(user, force_update=False):
         user.latest_gift_count = data.get("latest_sub_gift_count")
         user.latest_cheerer = data.get("last_cheerer")
         user.latest_cheer_amount = data.get("last_cheer_amount")
+        user.is_live = data.get("is_live", False)
         
         # Parse badge config settings
         badge_config = data.get("badge_config", {})
@@ -446,6 +447,7 @@ class TwitchUser:
         self.latest_cheerer = None
         self.latest_cheer_amount = None
         self.description = None
+        self.is_live = False
         # Badge config settings
         self.auto_scroll = 30  # seconds between auto-scrolls, 0 = disabled
         self.show_latest_sub = True
@@ -498,6 +500,7 @@ class TwitchUser:
         self.latest_cheerer = None
         self.latest_cheer_amount = None
         self.description = None
+        self.is_live = False
         self.auto_scroll = 30  # seconds between auto-scrolls, 0 = disabled
         self.show_latest_sub = True
         self.show_latest_follower = True
@@ -659,6 +662,16 @@ class TwitchUser:
         width = ((size[0] - 4) / 100) * battery_level
         screen.pen = twitch_purple
         screen.shape(shape.rectangle(pos[0] + 2, pos[1] + 2, width, size[1] - 4))
+        
+        # Draw LIVE indicator if streaming (below battery in red)
+        if self.is_live:
+            screen.font = small_font
+            screen.pen = color.rgb(255, 0, 0)  # Red color
+            live_text = "LIVE"
+            live_w, _ = screen.measure_text(live_text)
+            # Center under battery (battery center x = pos[0] + size[0]/2)
+            live_x = pos[0] + (size[0] / 2) - (live_w / 2)
+            screen.text(live_text, live_x, pos[1] + size[1] + 3)
         
         # Draw username/handle area with loading status
         handle = self.display_name or self.username
@@ -1003,6 +1016,7 @@ def load_cached_data():
                 user.latest_gift_count = data.get("latest_sub_gift_count")
                 user.latest_cheerer = data.get("last_cheerer")
                 user.latest_cheer_amount = data.get("last_cheer_amount")
+                user.is_live = data.get("is_live", False)
                 
                 # Parse badge config settings
                 badge_config = data.get("badge_config", {})
