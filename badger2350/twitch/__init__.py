@@ -62,6 +62,22 @@ badge_config = {
 }
 
 
+def format_number(num):
+    """Format numbers with k/m suffixes and 2 decimal places.
+    
+    Examples:
+        1234567 -> "1.23m"
+        12345 -> "12.35k"
+        999 -> "999"
+    """
+    if num >= 1000000:
+        return f"{num / 1000000:.2f}m"
+    elif num >= 1000:
+        return f"{num / 1000:.2f}k"
+    else:
+        return str(num)
+
+
 def tier_label(tier):
     """Convert tier code (e.g. '1000') to a readable label."""
     tiers = {"1000": "Tier 1", "2000": "Tier 2", "3000": "Tier 3"}
@@ -175,7 +191,7 @@ def draw_page_stats():
 
         # Left column - Followers
         screen.font = large_font
-        count_text = str(streamer["follower_count"])
+        count_text = format_number(streamer["follower_count"])
         tw, _ = screen.measure_text(count_text)
         screen.text(count_text, (mid // 2) - (tw // 2), y)
         
@@ -188,7 +204,7 @@ def draw_page_stats():
         # Right column - Subscribers (no divider line)
         screen.pen = color.black
         screen.font = large_font
-        count_text = str(streamer["subscriber_count"])
+        count_text = format_number(streamer["subscriber_count"])
         tw, _ = screen.measure_text(count_text)
         screen.text(count_text, mid + (mid // 2) - (tw // 2), y)
         
@@ -200,7 +216,7 @@ def draw_page_stats():
     else:
         # Centered layout for non-affiliate
         screen.font = large_font
-        count = str(streamer["follower_count"])
+        count = format_number(streamer["follower_count"])
         tw, _ = screen.measure_text(count)
         screen.text(count, (WIDTH - tw) // 2, y)
 
@@ -228,7 +244,7 @@ def draw_page_latest_follower():
     # Centered follower count at top
     y = start_y
     screen.font = large_font
-    count_text = str(streamer["follower_count"])
+    count_text = format_number(streamer["follower_count"])
     tw, _ = screen.measure_text(count_text)
     screen.text(count_text, (WIDTH - tw) // 2, y)
 
@@ -271,7 +287,7 @@ def draw_page_latest_subscriber():
     # Centered subscriber count at top
     y = start_y
     screen.font = large_font
-    count_text = str(streamer["subscriber_count"])
+    count_text = format_number(streamer["subscriber_count"])
     tw, _ = screen.measure_text(count_text)
     screen.text(count_text, (WIDTH - tw) // 2, y)
 
@@ -322,7 +338,7 @@ def draw_page_latest_cheer():
     # Bit amount
     screen.font = large_font
     screen.pen = color.black
-    bits_text = str(streamer["last_cheer_amount"]) + " bits"
+    bits_text = format_number(streamer["last_cheer_amount"]) + " bits"
     tw, _ = screen.measure_text(bits_text)
     screen.text(bits_text, (WIDTH - tw) // 2, y + 20)
 
@@ -366,7 +382,7 @@ def draw_page_latest_gifted_sub():
     # Gift count
     screen.font = large_font
     screen.pen = color.black
-    count_text = str(streamer["latest_sub_gift_count"])
+    count_text = format_number(streamer["latest_sub_gift_count"])
     tw, _ = screen.measure_text(count_text)
     screen.text(count_text, (WIDTH - tw) // 2, y + 20)
 
