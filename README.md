@@ -176,7 +176,7 @@ Views are dynamically enabled based on your broadcaster type (Affiliate/Partner)
 ## How It Works
 
 1. On startup, the app loads cached data from the badge's local storage for an instant display
-2. It connects to WiFi and fetches your latest stats from the Badge API.
+2. It connects to WiFi when you press and hold A+C on the Tufty 2350 or hold A on the Badger 2350 and fetches your latest stats from the Badge API.
 3. The response includes your streamer data and a `badge_config` object that controls which views are shown and auto-scroll timing
 4. Data is cached locally so the badge works offline and starts up quickly
 5. WiFi is disconnected after fetching to conserve battery
