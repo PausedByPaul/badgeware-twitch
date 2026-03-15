@@ -1,6 +1,6 @@
 # Badgeware Twitch
 
-Show off your Twitch streamer stats on a wearable badge — a brilliant way to engage with your community IRL! Whether you're at a meetup, convention, or just hanging out, your badge keeps your audience in the loop with live follower counts, latest subscribers, cheers, and more.
+Show off your Twitch streamer stats on a wearable badge - a brilliant way to engage with your community IRL! Whether you're at a meetup, convention, or just hanging out, your badge keeps your audience in the loop with live follower counts, latest subscribers, cheers, and more.
 
 Supports both the **Pimoroni Badger 2350** (e-ink) and **Pimoroni Tufty 2350** (colour LCD).
 
