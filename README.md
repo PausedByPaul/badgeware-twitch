@@ -15,7 +15,7 @@ Supports both the **Pimoroni Badger 2350** (e-ink) and **Pimoroni Tufty 2350** (
 - **Profile avatar** — displayed on the Tufty 2350's colour screen
 - **Auto-rotating views** — cycle through stats hands-free (Only for intervals of 30s+ on **Badger 2350**)
 - **Battery & charging indicator** — so you know when to top up
-- **Smart caching** — loads instantly from cache, refreshes in the background
+- **Smart caching** — loads instantly from cache, upon request by pressing A+C (hold) on Tufty 2350 or A (hold) on Badger 2350
 - **Low battery mode** — disables animations below 20% to extend battery life
 
 ## Requirements
@@ -34,6 +34,45 @@ Rather than running your own backend, anyone can sign up for the hosted API serv
 > **https://badge.pausedbypaul.net**
 
 Sign up, link your Twitch account, and you'll receive a **UUID** that your badge uses to fetch your streamer stats. No self-hosting required.
+
+If you want to host your own, you will need to adapt the code to point to your server, and respond in the following JSON format:
+
+```json
+{
+  "uuid": "ccede6b1-ff22-4e47-92db-e30ee8242b3d",
+  "user_id": "57779122",
+  "handle": "pausedbypaul",
+  "display_name": "PausedByPaul",
+  "broadcaster_type": "affiliate",
+  "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/1bf744de-b361-4a5d-8f57-6d48047f2210-profile_image-300x300.png",
+  "is_live": false,
+  "follower_count": 249,
+  "subscriber_count": 3,
+  "latest_follower": "awesome_follower",
+  "latest_follower_time": "2026-03-09T20:06:00Z",
+  "last_cheerer": "cheer_master",
+  "last_cheer_amount": 20,
+  "last_cheer_time": "2026-01-31T23:52:47Z",
+  "latest_subscriber": "great_subscriber",
+  "latest_subscriber_tier": "1000",
+  "latest_subscriber_time": "2026-03-09T19:53:02Z",
+  "latest_sub_gifter": "generous_gifter",
+  "latest_sub_gift_count": 5,
+  "latest_sub_gift_time": null,
+  "badge_config": {
+    "auto_scroll": 30,
+    "show_latest_sub": true,
+    "show_latest_follower": true,
+    "show_latest_gifted_sub": true,
+    "show_latest_cheer": true
+  },
+  "last_badge_connect": "2026-03-15T23:21:16Z",
+  "created_at": "2026-01-31T23:35:41Z",
+  "updated_at": "2026-03-15T23:21:48Z"
+}
+```
+
+Not all of these fields are available direct from the Twitch Helix API, so my hosted service aggregates data from the Helix API and Twitch EventSub webhooks to provide a comprehensive dataset for the badge.
 
 ## Installation
 
