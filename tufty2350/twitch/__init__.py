@@ -345,6 +345,22 @@ def get_avatar(user, force_update=False):
         user.avatar = False
 
 
+def format_number(num):
+    """Format numbers with k/m suffixes and 2 decimal places.
+    
+    Examples:
+        1234567 -> "1.23m"
+        12345 -> "12.35k"
+        999 -> "999"
+    """
+    if num >= 1000000:
+        return f"{num / 1000000:.2f}m"
+    elif num >= 1000:
+        return f"{num / 1000:.2f}k"
+    else:
+        return str(num)
+
+
 def fake_number():
     return random.randint(100, 9999)
 
@@ -510,7 +526,7 @@ class TwitchUser:
     def draw_stat(self, title, value, x, y):
         screen.pen = white if value is not None else faded
         screen.font = large_font
-        display_value = str(value) if value is not None else str(fake_number())
+        display_value = format_number(value) if value is not None else str(fake_number())
         screen.text(display_value, x, y)
         screen.font = small_font
         screen.pen = twitch_purple_light
@@ -520,7 +536,7 @@ class TwitchUser:
         """Draw a stat centered on screen."""
         screen.font = large_font
         screen.pen = white if value is not None else faded
-        display_value = str(value) if value is not None else str(fake_number())
+        display_value = format_number(value) if value is not None else str(fake_number())
         w, _ = screen.measure_text(display_value)
         screen.text(display_value, 80 - (w / 2), y)
         screen.font = small_font
@@ -778,7 +794,7 @@ class TwitchUser:
                 
                 screen.font = large_font
                 screen.pen = faded
-                gift_count = str(fake_number())
+                gift_count = format_number(fake_number())
                 w, _ = screen.measure_text(gift_count)
                 screen.text(gift_count, 80 - (w / 2), 50)
                 
@@ -802,7 +818,7 @@ class TwitchUser:
                 
                 screen.font = large_font
                 screen.pen = white
-                gift_count = str(self.latest_gift_count)
+                gift_count = format_number(self.latest_gift_count)
                 w, _ = screen.measure_text(gift_count)
                 screen.text(gift_count, 80 - (w / 2), 50)
                 
@@ -841,7 +857,7 @@ class TwitchUser:
                 
                 screen.font = large_font
                 screen.pen = faded
-                cheer_amount = str(fake_number()) + " bits"
+                cheer_amount = format_number(fake_number()) + " bits"
                 w, _ = screen.measure_text(cheer_amount)
                 screen.text(cheer_amount, 80 - (w / 2), 50)
                 
@@ -865,7 +881,7 @@ class TwitchUser:
                 
                 screen.font = large_font
                 screen.pen = white
-                cheer_amount = str(self.latest_cheer_amount) + " bits"
+                cheer_amount = format_number(self.latest_cheer_amount) + " bits"
                 w, _ = screen.measure_text(cheer_amount)
                 screen.text(cheer_amount, 80 - (w / 2), 50)
                 
