@@ -292,6 +292,7 @@ def get_streamer_data(user, force_update=False):
         user.latest_follower = data.get("latest_follower", "No followers")
         user.total_subs = data.get("subscriber_count", 0)
         user.latest_sub = data.get("latest_subscriber", "No subs")
+        user.latest_subscriber_months = data.get("latest_subscriber_months", 0)
         user.latest_gifter = data.get("latest_sub_gifter")
         user.latest_gift_count = data.get("latest_sub_gift_count")
         user.latest_cheerer = data.get("last_cheerer")
@@ -442,6 +443,7 @@ class TwitchUser:
         self.latest_follower = None
         self.total_subs = None
         self.latest_sub = None
+        self.latest_subscriber_months = 0
         self.latest_gifter = None
         self.latest_gift_count = None
         self.latest_cheerer = None
@@ -495,6 +497,7 @@ class TwitchUser:
         self.latest_follower = None
         self.total_subs = None
         self.latest_sub = None
+        self.latest_subscriber_months = 0
         self.latest_gifter = None
         self.latest_gift_count = None
         self.latest_cheerer = None
@@ -793,6 +796,8 @@ class TwitchUser:
             else:
                 screen.pen = white
                 sub_name = self.latest_sub
+                if self.latest_subscriber_months and self.latest_subscriber_months > 1:
+                    sub_name = sub_name + " x" + str(self.latest_subscriber_months)
             scroll_text(sub_name, 140, 85)
         elif current_view == VIEW_LAST_GIFT:
             # Gifted subs view

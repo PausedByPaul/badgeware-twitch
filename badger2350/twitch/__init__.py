@@ -45,6 +45,7 @@ streamer = {
     "latest_follower": "",
     "latest_subscriber": "",
     "latest_subscriber_tier": "",
+    "latest_subscriber_months": 0,
     "last_cheerer": "",
     "last_cheer_amount": 0,
     "latest_sub_gifter": "",
@@ -309,6 +310,9 @@ def draw_page_latest_subscriber():
     screen.font = large_font
     screen.pen = color.black
     sub = streamer["latest_subscriber"] or "---"
+    months = streamer["latest_subscriber_months"]
+    if months and months > 1:
+        sub = sub + " x" + str(months)
     tw, _ = screen.measure_text(sub)
     screen.text(sub, (WIDTH - tw) // 2, y + 20)
 
@@ -435,6 +439,7 @@ def load_cache():
         streamer["latest_follower"] = data.get("latest_follower", "---")
         streamer["latest_subscriber"] = data.get("latest_subscriber", "---")
         streamer["latest_subscriber_tier"] = data.get("latest_subscriber_tier", "")
+        streamer["latest_subscriber_months"] = data.get("latest_subscriber_months", 0)
         streamer["last_cheerer"] = data.get("last_cheerer", "---")
         streamer["last_cheer_amount"] = data.get("last_cheer_amount", 0)
         streamer["latest_sub_gifter"] = data.get("latest_sub_gifter", "---")
@@ -507,6 +512,7 @@ def fetch_data():
         streamer["latest_follower"] = j.get("latest_follower", "---")
         streamer["latest_subscriber"] = j.get("latest_subscriber", "---")
         streamer["latest_subscriber_tier"] = j.get("latest_subscriber_tier", "")
+        streamer["latest_subscriber_months"] = j.get("latest_subscriber_months", 0)
         streamer["last_cheerer"] = j.get("last_cheerer", "---")
         streamer["last_cheer_amount"] = j.get("last_cheer_amount", 0)
         streamer["latest_sub_gifter"] = j.get("latest_sub_gifter", "---")

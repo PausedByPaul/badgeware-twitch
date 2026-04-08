@@ -55,6 +55,7 @@ If you want to host your own, you will need to adapt the code to point to your s
   "last_cheer_time": "2026-01-31T23:52:47Z",
   "latest_subscriber": "great_subscriber",
   "latest_subscriber_tier": "1000",
+  "latest_subscriber_months": 10,
   "latest_subscriber_time": "2026-03-09T19:53:02Z",
   "latest_sub_gifter": "generous_gifter",
   "latest_sub_gift_count": 5,
