@@ -21,7 +21,7 @@ Supports both the **Pimoroni Badger 2350** (e-ink) and **Pimoroni Tufty 2350** (
 ## Requirements
 
 - **Pimoroni Badger 2350** and/or **Pimoroni Tufty 2350**
-- **Badge firmware v2.0.1** — both Badger 2350 and Tufty 2350 must be running firmware version **2.0.1** or later
+- **Badge firmware v3.1.1** — both Badger 2350 and Tufty 2350 must be running firmware version **3.1.1** or later (v2.x firmware is no longer supported)
   - [Badger 2350 firmware](https://github.com/pimoroni/badger2350) 
   - [Tufty 2350 firmware](https://github.com/pimoroni/tufty2350)
 - A WiFi network for the badge to connect to
@@ -79,7 +79,7 @@ Not all of these fields are available direct from the Twitch Helix API, so my ho
 
 ### 1. Flash the firmware
 
-Make sure your badge is running firmware **v2.0.1** or later. Follow the instructions in the respective firmware repositories for your device:
+Make sure your badge is running firmware **v3.1.1** or later. Follow the instructions in the respective firmware repositories for your device:
 
 - [Badger 2350 firmware repo](https://github.com/pimoroni/badger2350)
 - [Tufty 2350 firmware repo](https://github.com/pimoroni/tufty2350)

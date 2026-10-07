@@ -19,8 +19,8 @@ import json
 secrets.require("TWITCH_UUID")
 
 # Use larger built-in ROM fonts for better readability
-small_font = rom_font.nope
-large_font = rom_font.ignore
+small_font = font.nope
+large_font = font.ignore
 
 # Display constants
 WIDTH = screen.width
@@ -494,10 +494,9 @@ def fetch_data():
             pass
         
         show_message("Connecting to WiFi...")
-        wifi.connect()
-        
-        # Wait for connection
-        while not wifi.tick():
+
+        # Wait for connection (connect() polls and returns True once connected)
+        while not wifi.connect():
             pass
 
         show_message("Fetching Twitch data...")
